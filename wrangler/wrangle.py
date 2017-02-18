@@ -104,4 +104,4 @@ with open('banks_enabled') as file:
         #print(scraped_data)
         scraped_data += wrangle(line)
 
-open('output_data.txt', 'w+').write(scraped_data)
+open('output_data.csv', 'w+').write(scraped_data)
