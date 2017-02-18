@@ -2,3 +2,4 @@
 data-env/
 client_secret.json
 service_creds.json
+sheets.googleapis.com-python.json
