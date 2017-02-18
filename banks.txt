@@ -1,6 +1,0 @@
-Wells Fargo,https://www.wellsfargo.com/mortgage/rates/
-Chase,https://www.chase.com/mortgage/mortgage-rates
-Citi,https://online.citi.com/US/JRS/portal/template.do?ID=mortgage_home_mortgage
-Bank of America,https://www.bankofamerica.com/mortgage/mortgage-rates/
-Capital One,https://www.capitalone.com/home-loans/mortgage/rates
-TD Bank,https://tdbank.mortgagewebcenter.com/Resources/Resources/MortgageCompare
