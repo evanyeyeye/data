@@ -60,7 +60,7 @@ def wrangle(b):
     #print (html.tostring(tree))
     titles, rates = parse(tree, banks[b]['title_xpath'], banks[b][
                           'rate_xpath'], banks[b]['title_replace'])
-    return formatCSV(b, titles, rates)
+    return format_csv(b, titles, rates)
 
 
 def parse(tree, t_xpath, r_xpath, t_replace):
@@ -80,7 +80,7 @@ def parse(tree, t_xpath, r_xpath, t_replace):
     return t, r
 
 
-def formatCSV(b, t, r):
+def format_csv(b, t, r):
     final = [b, time.strftime("%m/%d/%Y")]
     for c in col_order:
         found = False
@@ -98,10 +98,10 @@ scraped_data = ""
 with open('banks_enabled') as file:
     for line in file:
         line = line.replace('\n', '')
-        if not line in banks:
+        if line not in banks:
             print('The bank: ' + line + ' is unavailable.')
             continue
-        #print(scraped_data)
+        # print(scraped_data)
         scraped_data += wrangle(line)
 
 open('output_data.csv', 'w+').write(scraped_data)

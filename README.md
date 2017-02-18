@@ -1,7 +1,9 @@
-# data
+# Data Alexa Skill #
 Data Alexa Skill for Big Parser
 
-### Setup ###
+## Setup ##
+
+* dryscrape requires webkit-server which in turn requires qt5. Ensure you have qt5 installed on your system before installing dryscrape.
 
 * Install required initial packages `pip install --user virtualenv autoenv`
 
