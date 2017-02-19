@@ -9,10 +9,13 @@ valid = {"yes": True, "y": True, "ye": True,
 
 def read_csv():
 
-    with open('output.csv') as file:
-        reader = csv.reader(file, delimiter=' ', quotechar='|')
+    with open('wrangler/output_data.csv') as file:
+        reader = csv.reader(file, delimiter=',', quotechar='|')
+
+        rows = []
         for row in reader:
-            print ', '.join(row)
+            rows.append(row)
+        return rows
 
 
 def yn_prompt(prompt):
@@ -74,9 +77,12 @@ def main():
 
     sh = gc.open(sheet_name)
     wks = sh.sheet1
-    rows = len(wks.get_col(1, returnas='cell', include_empty=False))
-    wks.append_row(start=("A" + str(rows + 1)),
-                   end=None, values=["memes", "memes"])
+    to_insert = read_csv()
+    for row in to_insert:
+
+        rows = len(wks.get_col(1, returnas='cell', include_empty=False))
+        wks.append_row(start=("A" + str(rows + 1)),
+                       end=None, values=row)
 
 
 if __name__ == "__main__":
