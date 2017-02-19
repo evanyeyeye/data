@@ -1,7 +1,9 @@
 from lxml import html
+from xvfbwrapper import Xvfb
 import dryscrape
 import time
 import sys
+import atexit
 
 banks = {
     'Wells Fargo': {
@@ -52,8 +54,18 @@ col_order = [
     '7 Year ARM Jumbo',
 ]
 
+_xvfb = None
+
+
+def stop_xvfb():
+    global _xvfb
+    _xvfb.stop()
+
 
 def wrangle(b):
+    _xvfb = Xvfb()
+    _xvfb.start()
+    atexit.register(_xvfb.stop)
     session = dryscrape.Session()
     session.visit(banks[b]['url'])
     tree = html.fromstring(session.body())

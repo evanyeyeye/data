@@ -11,6 +11,8 @@ Data Alexa Skill for Big Parser
 
 * Create a virtualenv using `virtualenv --no-site-packages --distribute -p <PATH TO PYTHON 3 EXECUTABLE> <NAME>`
 
+* Edit `.env` and change the empty strings to their appropriate values, as well as changing the line beginning with `source` to have the correct directory of the project
+
 * `cd` into the project root directory and autoenv should activate
 
 * Install the required packages using `pip install -r requirements.txt`
@@ -23,4 +25,3 @@ Data Alexa Skill for Big Parser
 
 * Rename `client_secretxxx.json` to `client_secret.json`
 
-* Edit `.env` and change the empty strings to their appropriate values
