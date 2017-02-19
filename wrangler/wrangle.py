@@ -99,6 +99,10 @@ def parse(tree, t_xpath, r_xpath, t_replace):
         t.append(tt)
     #print(t)
     r = tree.xpath(r_xpath)
+    while r == []:
+    	print ('Waiting for JavaScript to load... (1 minute)')
+    	time.sleep(60)
+    	r = tree.xpath(r_xpath)
     #print (r)
     return t, r
 
