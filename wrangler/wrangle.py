@@ -1,9 +1,8 @@
 from lxml import html
 from xvfbwrapper import Xvfb
+import atexit
 import dryscrape
 import time
-import sys
-import atexit
 
 banks = {
     'Wells Fargo': {
@@ -35,6 +34,18 @@ banks = {
         'title_xpath': '//h3[@class="ng-binding"]/text()',
         'rate_xpath': '//div[text()="MONTHLY"]/following-sibling::div[1]/text()',
         'title_replace': (('/1 Adjustable', ' Year ARM'), ('-', ' '))
+    },
+    'TD Bank': {
+    	'url': 'https://tdbank.mortgagewebcenter.com/Resources/Resources/MortgageCompare',
+        'title_xpath': '',
+        'rate_xpath': '',
+        'title_replace': ''
+    },
+    'US Bank': {
+    	'url': 'https://www.usbank.com/home-loans/mortgage/mortgage-rates.aspx',
+        'title_xpath': '//td[@class="MortPaddingMob15px10px"]/a/text()',
+        'rate_xpath': '//td[@class="MortPaddingMob15px10px"]/a/parent::td/following-sibling::td[1]/text()',
+        'title_replace': (('-Year', ' Year'), (' - ', ' '), (' (conforming)', ''), (' (adjustable)', ''))
     }
 }
 
@@ -86,7 +97,7 @@ def parse(tree, t_xpath, r_xpath, t_replace):
         if tt == '':
             continue
         t.append(tt)
-    # print(t)
+    #print(t)
     r = tree.xpath(r_xpath)
     #print (r)
     return t, r
