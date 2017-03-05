@@ -7,12 +7,15 @@ valid = {"yes": True, "y": True, "ye": True,
          "no": False, "n": False}
 
 
-def read_csv():
+def read_csv(ifile):
 
-    with open('output.csv') as file:
-        reader = csv.reader(file, delimiter=' ', quotechar='|')
+    with open(ifile) as file:
+        reader = csv.reader(file, delimiter=',', quotechar='|')
+
+        rows = []
         for row in reader:
-            print ', '.join(row)
+            rows.append(row)
+        return rows
 
 
 def yn_prompt(prompt):
@@ -42,19 +45,24 @@ def new_sheet(choice):
         return None
 
 
-def main():
+def main(ifile, ofile):
 
     gc = pygsheets.authorize(
         outh_file="client_secret.json",
         outh_nonlocal=True)
 
-    choice = yn_prompt("Do you want to create a new sheet? [y/n] ")
-    sheet_name = new_sheet(choice)
     all_sheets = gc.list_ssheets()
     all_names = [sheet['name'] for sheet in all_sheets]
 
+    sheet_name = None
+    if ofile is None:
+        choice = yn_prompt("Do you want to create a new sheet? [y/n] ")
+        sheet_name = new_sheet(choice)
+
     if sheet_name is not None:
         gc.create(sheet_name)
+    elif ofile is not None and sheet_name is None:
+        sheet_name = ofile
     else:
         while True:
             sys.stdout.write("Name of Google Sheet: ")
@@ -74,10 +82,20 @@ def main():
 
     sh = gc.open(sheet_name)
     wks = sh.sheet1
-    rows = len(wks.get_col(1, returnas='cell', include_empty=False))
-    wks.append_row(start=("A" + str(rows + 1)),
-                   end=None, values=["memes", "memes"])
+    to_insert = read_csv(ifile)
+    for row in to_insert:
+
+        rows = len(wks.get_col(1, returnas='cell', include_empty=False))
+        wks.append_row(start=("A" + str(rows + 1)),
+                       end=None, values=row)
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) < 2:
+        print("Error: Wrong number of arguments\nUsage: python auth.py <CSV filename> <Google spreadsheet name>")
+    elif len(sys.argv) == 2:
+        # Input CSV filename, Output Google Spreadsheet name
+        main(sys.argv[1], None)
+    else:
+        # Input CSV filename, Output Google Spreadsheet name
+        main(sys.argv[1], sys.argv[2])
