@@ -36,13 +36,13 @@ banks = {
         'title_replace': (('/1 Adjustable', ' Year ARM'), ('-', ' '))
     },
     'TD Bank': {
-    	'url': 'https://tdbank.mortgagewebcenter.com/Resources/Resources/MortgageCompare',
+        'url': 'https://tdbank.mortgagewebcenter.com/Resources/Resources/MortgageCompare',
         'title_xpath': '',
         'rate_xpath': '',
         'title_replace': ''
     },
     'US Bank': {
-    	'url': 'https://www.usbank.com/home-loans/mortgage/mortgage-rates.aspx',
+        'url': 'https://www.usbank.com/home-loans/mortgage/mortgage-rates.aspx',
         'title_xpath': '//td[@class="MortPaddingMob15px10px"]/a/text()',
         'rate_xpath': '//td[@class="MortPaddingMob15px10px"]/a/parent::td/following-sibling::td[1]/text()',
         'title_replace': (('-Year', ' Year'), (' - ', ' '), (' (conforming)', ''), (' (adjustable)', ''))
@@ -97,12 +97,12 @@ def parse(tree, t_xpath, r_xpath, t_replace):
         if tt == '':
             continue
         t.append(tt)
-    #print(t)
+    # print(t)
     r = tree.xpath(r_xpath)
     while r == []:
-    	print ('Waiting for JavaScript to load... (1 minute)')
-    	time.sleep(60)
-    	r = tree.xpath(r_xpath)
+        print('Waiting for JavaScript to load... (1 minute)')
+        time.sleep(60)
+        r = tree.xpath(r_xpath)
     #print (r)
     return t, r
 
